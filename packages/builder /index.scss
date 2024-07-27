@@ -1,0 +1,22 @@
+.layout{
+    .menu{
+        
+    }
+    .content{
+        display: flex;
+        height: 100vh;
+        .materials{
+            width: 200px;
+            // border:1px solid orange
+        }
+        .canvas{
+            flex:1;
+            // border:1px solid orange
+            position: relative;
+        }
+        .settings{
+            width: 300px;
+            // border:1px solid orange
+        }
+    }
+}

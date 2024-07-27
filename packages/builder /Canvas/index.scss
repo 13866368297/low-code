@@ -1,0 +1,10 @@
+.interaction{
+    width: auto;
+    height: auto;
+    position: absolute;
+    &.active{
+        .component-layout{
+            border:1px solid orangered
+        }
+    }
+}

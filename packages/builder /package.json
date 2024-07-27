@@ -1,0 +1,16 @@
+{
+  "name": "@lowcode/builder",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@lowcode/materials": "workspace:^1.0.0",
+    "@lowcode/share": "workspace:^1.0.0"
+  }
+}
