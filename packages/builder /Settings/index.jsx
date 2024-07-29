@@ -1,4 +1,4 @@
-import * as MaterialList from '@lowcode/materials';
+import { materials } from '../state';
 import { Button } from 'antd';
 import { useRef } from 'react';
 import { useCanvasStore } from '../store/canvas';
@@ -9,7 +9,7 @@ export default function Setting() {
   const { selectedComponent } = useCanvasStore();
   const props = useRef({});
   const Setting =
-    selectedComponent && MaterialList[selectedComponent.type]?.setting;
+    selectedComponent && materials[selectedComponent.type]?.setting;
 
   const { name } = selectedComponent || {};
 

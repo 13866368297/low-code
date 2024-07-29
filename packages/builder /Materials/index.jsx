@@ -1,4 +1,4 @@
-import * as MaterialList from '@lowcode/materials';
+import { materials } from '../state';
 
 export default function Materials() {
   const onDragStart = (ev, type) => {
@@ -7,7 +7,7 @@ export default function Materials() {
 
   return (
     <div className="materials">
-      {Object.values(MaterialList).map((material) => {
+      {Object.values(materials).map((material) => {
         return (
           <div
             key={material.type}

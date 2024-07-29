@@ -2,11 +2,18 @@ import { createStore } from 'react-global-hook-store';
 import { useState, useRef } from 'react';
 import { cloneDeep } from 'lodash';
 import { createSchema } from './constant';
+import { SCHEMA_KEY } from '../constant';
+
+const getSchema = () => {
+  const schema = window.localStorage.getItem(SCHEMA_KEY);
+  if (schema) return JSON.parse(schema);
+  return createSchema();
+};
 
 function useSchema() {
   const queue = useRef([]);
   const queueIndex = useRef(0);
-  const [schema, setSchema] = useState(createSchema());
+  const [schema, setSchema] = useState(getSchema());
 
   const updateSchema = (schema) => {
     queue.current = queue.current.slice(0, queueIndex.current.length);

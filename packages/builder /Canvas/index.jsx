@@ -1,5 +1,6 @@
 import { useSchemaStore } from '../store/schema';
-import * as MaterialList from '@lowcode/materials';
+import { materials } from '../state';
+
 import Interaction from './Interaction';
 import { RunComponentStore } from '@lowcode/components';
 const ComponentStore = RunComponentStore();
@@ -37,7 +38,7 @@ export default function Canvas() {
   return (
     <div className="canvas" onDrop={onDrop} onDragOver={onDragOver}>
       {schema.components.map((component) => {
-        const Component = MaterialList[component.type]?.component;
+        const Component = materials[component.type]?.component;
         return (
           <Interaction component={component}>
             <ComponentStore>
