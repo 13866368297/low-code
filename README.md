@@ -4,7 +4,7 @@
 
 ### 项目结构
 
-LowCode
+<!-- LowCode
 ├── packages/
 │ | builder 搭建器
 │ │ ├── canvas 画布
@@ -15,7 +15,25 @@ LowCode
 │ ├── materials 物料库
 │ ├── components 组件库
 │ ├── share 公共方法
-├── app 启动项目
+├── app 启动项目 -->
+
+LowCode
+├── ARCHITECTURE.md
+├── LICENSE.txt
+├── README.md
+├── /account/
+├── /bbs/
+├── packages/
+│ ├── /builder/
+│ │ ├── canvas 画布
+│ │ ├── canvas 物料区
+│ │ ├── canvas 编辑区
+│ │ └── materials 菜单栏
+│ ├── render 渲染器
+│ ├── materials 物料库
+│ ├── components 组件库
+│ └── share 公共模块
+└── app 启动项目
 
 ### 模块介绍
 
