@@ -31,7 +31,13 @@ export default function Menu() {
         <Button onClick={showDrawer}>预览</Button>
         <Button onClick={onSave}>保存</Button>
       </div>
-      <Drawer title="预览" onClose={onClose} open={open} width={1200}>
+      <Drawer
+        title="预览"
+        placement="top"
+        onClose={onClose}
+        open={open}
+        height={'100%'}
+      >
         <Render schema={schema} />
       </Drawer>
     </>

@@ -3,12 +3,13 @@ import { materials } from '../state';
 
 import Interaction from './Interaction';
 import { RunComponentStore } from '@lowcode/components';
+import { Position } from '@lowcode/components';
 const ComponentStore = RunComponentStore();
 // import { useComponentStore } from '../store/component';
 const indexMap = {};
 
 export default function Canvas() {
-  const { addComponent, schema } = useSchemaStore();
+  const { addComponent, schema, updatePropsByName } = useSchemaStore();
   // const { componentStore, updateComponentStore } = useComponentStore();
   function onDragOver(ev) {
     ev.preventDefault();
@@ -21,18 +22,24 @@ export default function Canvas() {
       left: ev.clientX - 200,
       top: ev.clientY,
     };
-    const data = ev.dataTransfer.getData('text/plain');
-    const name = `${data}-${(indexMap[data] = indexMap[data]
-      ? indexMap[data] + 1
-      : 1)}`;
+    let data = ev.dataTransfer.getData('text/plain');
+    if (data) {
+      data = JSON.parse(data);
+    }
+    if (data) {
+      const { type, name } = data;
+      const newName = `${name}(${(indexMap[type] = indexMap[type]
+        ? indexMap[type] + 1
+        : 1)})`;
 
-    addComponent({
-      type: data,
-      name,
-      props: {
-        layout,
-      },
-    });
+      addComponent({
+        type,
+        name: newName,
+        props: {
+          layout,
+        },
+      });
+    }
   }
 
   return (
@@ -40,20 +47,26 @@ export default function Canvas() {
       {schema.components.map((component) => {
         const Component = materials[component.type]?.component;
         return (
-          <Interaction component={component}>
-            <ComponentStore>
-              {(componentStore, updateComponentStore) => {
-                const store = componentStore[component.name] || {};
-                return (
-                  <Component
-                    {...component.props}
-                    {...store}
-                    updateComponentStore={updateComponentStore}
-                  />
-                );
-              }}
-            </ComponentStore>
-          </Interaction>
+          <ComponentStore>
+            {(componentStore, updateComponentStore) => {
+              const store = componentStore[component.name] || {};
+              const { layout, ...restProps } = component.props;
+              return (
+                <Position layout={layout}>
+                  <Interaction
+                    component={component}
+                    updatePropsByName={updatePropsByName}
+                  >
+                    <Component
+                      {...restProps}
+                      {...store}
+                      updateComponentStore={updateComponentStore}
+                    />
+                  </Interaction>
+                </Position>
+              );
+            }}
+          </ComponentStore>
         );
       })}
     </div>

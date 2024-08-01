@@ -10,12 +10,15 @@ export default function Render({ schema, materials }) {
           <ComponentStore>
             {(componentStore, updateComponentStore) => {
               const store = componentStore[component.name] || {};
+              const { layout, ...restProps } = component.props;
               return (
-                <Component
-                  {...component.props}
-                  {...store}
-                  updateComponentStore={updateComponentStore}
-                />
+                <Position layout={layout}>
+                  <Component
+                    {...restProps}
+                    {...store}
+                    updateComponentStore={updateComponentStore}
+                  />
+                </Position>
               );
             }}
           </ComponentStore>

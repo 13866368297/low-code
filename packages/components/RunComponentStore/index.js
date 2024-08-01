@@ -3,7 +3,9 @@ import { useComponent } from './store';
 
 export function ComponentStore({ children, useComponentStore }) {
   const { componentStore, updateComponentStore } = useComponentStore();
-  return children?.(componentStore, updateComponentStore);
+  const component = children?.(componentStore, updateComponentStore);
+  console.log('component', component);
+  return component;
 }
 
 export default function RunComponentStore() {

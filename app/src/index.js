@@ -14,7 +14,7 @@ schema = schema ? JSON.parse(schema) : null;
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <Prvoider>
-    {/* <Builder /> */}
-    <div className="render-wrap">{schema && <Render schema={schema} />}</div>
+    <Builder />
+    {/* <div className="render-wrap">{schema && <Render schema={schema} />}</div> */}
   </Prvoider>
 );

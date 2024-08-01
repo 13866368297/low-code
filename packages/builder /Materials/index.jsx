@@ -1,8 +1,10 @@
 import { materials } from '../state';
+import './index.scss';
 
 export default function Materials() {
-  const onDragStart = (ev, type) => {
-    ev.dataTransfer.setData('text/plain', type);
+  const onDragStart = (ev, { name, type }) => {
+    const data = JSON.stringify({ name, type });
+    ev.dataTransfer.setData('text/plain', data);
   };
 
   return (
@@ -12,9 +14,10 @@ export default function Materials() {
           <div
             key={material.type}
             draggable="true"
-            onDragStart={(ev) => onDragStart(ev, material.type)}
+            onDragStart={(ev) => onDragStart(ev, material)}
+            className="material"
           >
-            {material.icon}
+            {material.name}
           </div>
         );
       })}

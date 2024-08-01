@@ -2,7 +2,7 @@ import { Button } from '@lowcode/components';
 import Setting from './Setting';
 export default {
   type: 'MButton',
-  icon: 'MButton',
+  name: '按钮',
   component: Button,
   setting: Setting,
 };

@@ -3,6 +3,7 @@ import { Button } from 'antd';
 import { useRef } from 'react';
 import { useCanvasStore } from '../store/canvas';
 import { useSchemaStore } from '../store/schema';
+import './index.scss';
 
 export default function Setting() {
   const { updatePropsByName, schema } = useSchemaStore();
@@ -30,7 +31,9 @@ export default function Setting() {
           components={schema.components}
         ></Setting>
       )}
-      <Button onClick={onClick}>确定</Button>
+      <Button onClick={onClick} type="primary">
+        确定
+      </Button>
     </div>
   );
 }

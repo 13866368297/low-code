@@ -2,7 +2,7 @@ import { Card } from '@lowcode/components';
 import Setting from './Setting';
 export default {
   type: 'MCard',
-  icon: 'MCard',
+  name: '卡片',
   component: Card,
   setting: Setting,
 };
