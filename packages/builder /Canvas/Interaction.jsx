@@ -19,7 +19,6 @@ export default function Interaction({
     let offsetX;
     let offsetY;
     const onMouseDown = (e) => {
-      console.log('...onMouseDown');
       start = true;
       startX = e.pageX;
       startY = e.pageY;
@@ -32,17 +31,28 @@ export default function Interaction({
       offsetX = e.pageX - startX;
       offsetY = e.pageY - startY;
       const { layout } = component.props;
-      console.log('...onMouseMove', layout, offsetX, offsetY);
+      updatePropsByName(
+        component.name,
+        {
+          layout: {
+            left: layout.left + offsetX,
+            top: layout.top + offsetY,
+          },
+        },
+        false
+      );
+    };
+
+    const onMouseUp = (e) => {
+      offsetX = e.pageX - startX;
+      offsetY = e.pageY - startY;
+      const { layout } = component.props;
       updatePropsByName(component.name, {
         layout: {
           left: layout.left + offsetX,
           top: layout.top + offsetY,
         },
       });
-    };
-
-    const onMouseUp = () => {
-      console.log('...onMouseUp');
       start = false;
       document.removeEventListener('mousemove', onMouseMove);
       document.removeEventListener('mouseup', onMouseUp);

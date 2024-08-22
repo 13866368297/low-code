@@ -15,10 +15,12 @@ function useSchema() {
   const queueIndex = useRef(0);
   const [schema, setSchema] = useState(getSchema());
 
-  const updateSchema = (schema) => {
-    queue.current = queue.current.slice(0, queueIndex.current.length);
-    queue.current.push(schema);
-    queueIndex.current++;
+  const updateSchema = (schema, cache = true) => {
+    if (cache) {
+      queue.current = queue.current.slice(0, queueIndex.current.length);
+      queue.current.push(schema);
+      queueIndex.current++;
+    }
     setSchema(schema);
   };
 
@@ -28,13 +30,13 @@ function useSchema() {
     updateSchema(newSchema);
   };
 
-  const updatePropsByName = (name, props) => {
+  const updatePropsByName = (name, props, cache) => {
     const newSchema = cloneDeep(schema);
     const component = newSchema.components.find(
       (component) => component.name === name
     );
     Object.assign(component.props, props);
-    updateSchema(newSchema);
+    updateSchema(newSchema, cache);
   };
 
   const goBack = () => {

@@ -1,14 +1,14 @@
 import { Line } from '@ant-design/charts';
+const start = 1990;
+const end = 2100;
+const allData = [];
+
+for (let i = start; i < end; i++) {
+  allData.push({ year: String(i), value: Math.ceil(Math.random() * 10) });
+}
 
 export default function LineChart({ startTime, endTime, visible = true }) {
-  let data = [];
-
-  const start = 1990;
-  const end = 2100;
-  for (let i = start; i < end; i++) {
-    data.push({ year: String(i), value: Math.ceil(Math.random() * 10) });
-  }
-
+  let data = [...allData];
   if (startTime && endTime) {
     data = data.filter(
       ({ year }) =>
