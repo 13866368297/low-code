@@ -51,7 +51,7 @@ export default function Interaction({
     domRef.current.addEventListener('mousedown', onMouseDown);
 
     return () => {
-      domRef.current.removeEventListener('mousedown', onMouseDown);
+      domRef.current?.removeEventListener('mousedown', onMouseDown);
     };
   }, [component]);
 

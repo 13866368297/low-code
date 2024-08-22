@@ -7,7 +7,9 @@ export default function IButton({
   updateComponentStore,
 }) {
   const onChangeRelationColor = () => {
-    updateComponentStore(relation, (state) => ({ visible: !state.visible }));
+    updateComponentStore(relation, (state) => ({
+      visible: state.visible !== undefined ? !state.visible : false,
+    }));
   };
 
   return <Button onClick={onChangeRelationColor}>{text || 'Button'}</Button>;

@@ -1,6 +1,6 @@
 import { Line } from '@ant-design/charts';
 
-export default function LineChart({ startTime, endTime, visible }) {
+export default function LineChart({ startTime, endTime, visible = true }) {
   let data = [];
 
   const start = 1990;

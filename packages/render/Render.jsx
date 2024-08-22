@@ -1,4 +1,4 @@
-import { RunComponentStore } from '@lowcode/components';
+import { RunComponentStore, Position } from '@lowcode/components';
 const ComponentStore = RunComponentStore();
 
 export default function Render({ schema, materials }) {
