@@ -12,58 +12,58 @@ export default function Interaction({
     setSelectedComponent(component);
   };
 
-  useEffect(() => {
-    let start = false;
-    let startX;
-    let startY;
-    let offsetX;
-    let offsetY;
-    const onMouseDown = (e) => {
-      start = true;
-      startX = e.pageX;
-      startY = e.pageY;
-      document.addEventListener('mousemove', onMouseMove);
-      document.addEventListener('mouseup', onMouseUp);
-    };
+  // useEffect(() => {
+  //   let start = false;
+  //   let startX;
+  //   let startY;
+  //   let offsetX;
+  //   let offsetY;
+  //   const onMouseDown = (e) => {
+  //     start = true;
+  //     startX = e.pageX;
+  //     startY = e.pageY;
+  //     document.addEventListener('mousemove', onMouseMove);
+  //     document.addEventListener('mouseup', onMouseUp);
+  //   };
 
-    const onMouseMove = (e) => {
-      if (!start) return;
-      offsetX = e.pageX - startX;
-      offsetY = e.pageY - startY;
-      const { layout } = component.props;
-      updatePropsByName(
-        component.name,
-        {
-          layout: {
-            left: layout.left + offsetX,
-            top: layout.top + offsetY,
-          },
-        },
-        false
-      );
-    };
+  //   const onMouseMove = (e) => {
+  //     if (!start) return;
+  //     offsetX = e.pageX - startX;
+  //     offsetY = e.pageY - startY;
+  //     const { layout } = component.props;
+  //     updatePropsByName(
+  //       component.name,
+  //       {
+  //         layout: {
+  //           left: layout.left + offsetX,
+  //           top: layout.top + offsetY,
+  //         },
+  //       },
+  //       false
+  //     );
+  //   };
 
-    const onMouseUp = (e) => {
-      offsetX = e.pageX - startX;
-      offsetY = e.pageY - startY;
-      const { layout } = component.props;
-      updatePropsByName(component.name, {
-        layout: {
-          left: layout.left + offsetX,
-          top: layout.top + offsetY,
-        },
-      });
-      start = false;
-      document.removeEventListener('mousemove', onMouseMove);
-      document.removeEventListener('mouseup', onMouseUp);
-    };
+  //   const onMouseUp = (e) => {
+  //     offsetX = e.pageX - startX;
+  //     offsetY = e.pageY - startY;
+  //     const { layout } = component.props;
+  //     updatePropsByName(component.name, {
+  //       layout: {
+  //         left: layout.left + offsetX,
+  //         top: layout.top + offsetY,
+  //       },
+  //     });
+  //     start = false;
+  //     document.removeEventListener('mousemove', onMouseMove);
+  //     document.removeEventListener('mouseup', onMouseUp);
+  //   };
 
-    domRef.current.addEventListener('mousedown', onMouseDown);
+  //   domRef.current.addEventListener('mousedown', onMouseDown);
 
-    return () => {
-      domRef.current?.removeEventListener('mousedown', onMouseDown);
-    };
-  }, [component]);
+  //   return () => {
+  //     domRef.current?.removeEventListener('mousedown', onMouseDown);
+  //   };
+  // }, [component]);
 
   return (
     <div
@@ -72,6 +72,7 @@ export default function Interaction({
         component === selectedComponent ? 'active' : ''
       }`}
       ref={domRef}
+      data-sort={component.sort}
     >
       {children}
     </div>

@@ -57,6 +57,7 @@ function useSchema() {
   return {
     schema,
     addComponent,
+    updateSchema,
     updatePropsByName,
     goFoward,
     goBack,

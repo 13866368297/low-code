@@ -3,13 +3,14 @@ import { materials } from '../state';
 
 import Interaction from './Interaction';
 import { RunComponentStore } from '@lowcode/components';
-import { Position } from '@lowcode/components';
+import { Position, Sort } from '@lowcode/components';
 const ComponentStore = RunComponentStore();
 // import { useComponentStore } from '../store/component';
 const indexMap = {};
-
+let sort = 0;
 export default function Canvas() {
-  const { addComponent, schema, updatePropsByName } = useSchemaStore();
+  const { addComponent, schema, updateSchema, updatePropsByName } =
+    useSchemaStore();
   // const { componentStore, updateComponentStore } = useComponentStore();
   function onDragOver(ev) {
     ev.preventDefault();
@@ -35,8 +36,9 @@ export default function Canvas() {
       addComponent({
         type,
         name: newName,
+        sort: sort++,
         props: {
-          layout,
+          // layout,
         },
       });
     }
@@ -44,18 +46,19 @@ export default function Canvas() {
 
   return (
     <div className="canvas" onDrop={onDrop} onDragOver={onDragOver}>
-      {schema.components.map((component) => {
-        const Component = materials[component.type]?.component;
-        return (
-          <ComponentStore>
-            {(componentStore, updateComponentStore) => {
-              const store = componentStore[component.name] || {};
-              const { layout, ...restProps } = component.props;
-              return (
-                <Position layout={layout}>
+      <Sort schema={schema} updateSchema={updateSchema}>
+        {(component) => {
+          const Component = materials[component.type]?.component;
+          return (
+            <ComponentStore>
+              {(componentStore, updateComponentStore) => {
+                const store = componentStore[component.name] || {};
+                const { layout, ...restProps } = component.props;
+                return (
+                  // <Position layout={layout}>
                   <Interaction
                     component={component}
-                    updatePropsByName={updatePropsByName}
+                    // updatePropsByName={updatePropsByName}
                   >
                     <Component
                       {...restProps}
@@ -63,12 +66,13 @@ export default function Canvas() {
                       updateComponentStore={updateComponentStore}
                     />
                   </Interaction>
-                </Position>
-              );
-            }}
-          </ComponentStore>
-        );
-      })}
+                  // </Position>
+                );
+              }}
+            </ComponentStore>
+          );
+        }}
+      </Sort>
     </div>
   );
 }
