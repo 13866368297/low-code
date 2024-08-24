@@ -1,4 +1,5 @@
 import { Line } from '@ant-design/charts';
+import './index.scss';
 const start = 1990;
 const end = 2100;
 const allData = [];
@@ -18,10 +19,16 @@ export default function LineChart({ startTime, endTime, visible = true }) {
 
   const config = {
     data,
-    height: 400,
+    width: 400,
+    height: 200,
     xField: 'year',
     yField: 'value',
   };
   if (!visible) return;
-  return <Line {...config} />;
+
+  return (
+    <div className="line">
+      <Line {...config} />
+    </div>
+  );
 }

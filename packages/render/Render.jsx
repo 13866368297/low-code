@@ -12,13 +12,11 @@ export default function Render({ schema, materials }) {
               const store = componentStore[component.name] || {};
               const { layout, ...restProps } = component.props;
               return (
-                <Position layout={layout}>
-                  <Component
-                    {...restProps}
-                    {...store}
-                    updateComponentStore={updateComponentStore}
-                  />
-                </Position>
+                <Component
+                  {...restProps}
+                  {...store}
+                  updateComponentStore={updateComponentStore}
+                />
               );
             }}
           </ComponentStore>

@@ -4,15 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev1": "pnpm --filter app run start",
-    "dev2": "pnpm --filter app2 run start",
-    "dev": "pnpm --filter my-app run dev"
+    "dev": "pnpm --filter app run start"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@ant-design/charts": "^2.1.2",
+    "@ant-design/icons": "^5.4.0",
     "antd": "^5.19.3",
     "lodash": "^4.17.21",
     "react-global-hook-store": "^1.0.9"

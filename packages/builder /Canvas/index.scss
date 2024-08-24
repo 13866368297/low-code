@@ -1,8 +1,14 @@
 .interaction{
     width: auto;
     height: auto;
-    position: absolute;
+    // position: absolute;
     &.active{
             border:1px solid orangered
+    }
+}
+
+.sort-container{
+    >div{
+        margin: 4px 8px;
     }
 }

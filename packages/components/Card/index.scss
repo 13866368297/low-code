@@ -1,5 +1,11 @@
-.card{
-    width: 100px;
-    height: 100px;
-    border:1px solid #666;
+.card {
+  width: 300px;
+  // height: 100px;
+  // border:1px solid #666;
+}
+
+.ant-card-cover {
+  margin-top: 0px!important;
+  margin-inline-start: 0px!important;
+  margin-inline-end: 0px!important;
 }

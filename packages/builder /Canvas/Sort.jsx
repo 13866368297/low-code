@@ -1,6 +1,12 @@
 import { useRef, useEffect } from 'react';
+import { useCanvasStore } from '../store/canvas';
 
-export default function Sort({ schema, updateSchema, children }) {
+export default function Sort({
+  schema,
+  updateSchema,
+  children,
+  interaction = true,
+}) {
   const sortContainer = useRef();
 
   const { selectedComponent, setSelectedComponent } = useCanvasStore();
@@ -10,11 +16,11 @@ export default function Sort({ schema, updateSchema, children }) {
     const elements = Array.from(sortContainer.current.children);
     console.log('elements', elements);
 
-    const onClick = (e, component) => {
+    const onClick = (element, component) => {
       elements.forEach((element) => {
         element.style.border = 'none';
       });
-      e.target.style.border = '1px solid red';
+      element.style.border = '1px solid red';
       setSelectedComponent(component);
     };
 
@@ -35,8 +41,9 @@ export default function Sort({ schema, updateSchema, children }) {
     };
 
     const listeners = elements.map((element, i) => {
+      if (!interaction) return;
       element.draggable = true;
-      const click = (e) => onClick(e, schema.components[i]);
+      const click = (e) => onClick(element, schema.components[i]);
       const dragstart = (e) => onDragstart(e, i);
       const drop = (e) => onDrop(e, i);
       element.addEventListener('click', click);

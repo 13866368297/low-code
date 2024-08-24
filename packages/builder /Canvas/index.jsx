@@ -1,16 +1,16 @@
 import { useSchemaStore } from '../store/schema';
 import { materials } from '../state';
-
 import Interaction from './Interaction';
 import { RunComponentStore } from '@lowcode/components';
-import { Position, Sort } from '@lowcode/components';
+import Sort from './Sort';
 const ComponentStore = RunComponentStore();
 // import { useComponentStore } from '../store/component';
 const indexMap = {};
-let sort = 0;
 export default function Canvas() {
   const { addComponent, schema, updateSchema, updatePropsByName } =
     useSchemaStore();
+
+  console.log('schema', schema);
   // const { componentStore, updateComponentStore } = useComponentStore();
   function onDragOver(ev) {
     ev.preventDefault();
@@ -36,7 +36,6 @@ export default function Canvas() {
       addComponent({
         type,
         name: newName,
-        sort: sort++,
         props: {
           // layout,
         },
@@ -56,16 +55,16 @@ export default function Canvas() {
                 const { layout, ...restProps } = component.props;
                 return (
                   // <Position layout={layout}>
-                  <Interaction
-                    component={component}
-                    // updatePropsByName={updatePropsByName}
-                  >
-                    <Component
-                      {...restProps}
-                      {...store}
-                      updateComponentStore={updateComponentStore}
-                    />
-                  </Interaction>
+                  // <Interaction
+                  //   component={component}
+                  //   // updatePropsByName={updatePropsByName}
+                  // >
+                  <Component
+                    {...restProps}
+                    {...store}
+                    updateComponentStore={updateComponentStore}
+                  />
+                  // </Interaction>
                   // </Position>
                 );
               }}

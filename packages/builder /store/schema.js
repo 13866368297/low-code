@@ -14,29 +14,31 @@ function useSchema() {
   const queue = useRef([]);
   const queueIndex = useRef(0);
   const [schema, setSchema] = useState(getSchema());
+  console.log('schema', schema);
 
   const updateSchema = (schema, cache = true) => {
+    const newSchema = cloneDeep(schema);
     if (cache) {
       queue.current = queue.current.slice(0, queueIndex.current.length);
       queue.current.push(schema);
       queueIndex.current++;
     }
-    setSchema(schema);
+    setSchema(newSchema);
   };
 
   const addComponent = (component) => {
-    const newSchema = cloneDeep(schema);
-    newSchema.components.push(component);
-    updateSchema(newSchema);
+    // const newSchema = cloneDeep(schema);
+    schema.components.push(component);
+    updateSchema(schema);
   };
 
   const updatePropsByName = (name, props, cache) => {
-    const newSchema = cloneDeep(schema);
-    const component = newSchema.components.find(
+    // const newSchema = cloneDeep(schema);
+    const component = schema.components.find(
       (component) => component.name === name
     );
     Object.assign(component.props, props);
-    updateSchema(newSchema, cache);
+    updateSchema(schema, cache);
   };
 
   const goBack = () => {
