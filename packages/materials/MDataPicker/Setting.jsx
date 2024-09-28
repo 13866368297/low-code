@@ -2,7 +2,18 @@ import { Input, Select, Form } from 'antd';
 
 export default function Setting({ updateProps, components }) {
   const options = components
-    .filter(({ type }) => type === 'MLineChart')
+    .reduce((list, component) => {
+      if (component.type === 'MLineChart') {
+        list.push(component);
+      }
+      const childComponent = component.children?.find(
+        (child) => child.type === 'MLineChart'
+      );
+      if (childComponent) {
+        list.push(childComponent);
+      }
+      return list;
+    }, [])
     .map(({ name }) => ({ value: name, label: name }));
 
   const onChangeRelation = (value) => {

@@ -2,7 +2,18 @@ import { Input, Select, Form } from 'antd';
 
 export default function Setting({ updateProps, components }) {
   const options = components
-    .filter(({ type }) => type === 'MCard' || type === 'MLineChart')
+    .reduce((list, component) => {
+      if (component.type === 'MLineChart' || component.type === 'MCard') {
+        list.push(component);
+      }
+      const childComponent = component.children?.find(
+        (child) => child.type === 'MLineChart' || child.type === 'MCard'
+      );
+      if (childComponent) {
+        list.push(childComponent);
+      }
+      return list;
+    }, [])
     .map(({ name }) => ({ value: name, label: name }));
 
   const onChangeText = (e) => {

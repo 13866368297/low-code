@@ -1,3 +1,9 @@
 .settings{
     padding: 10px;
+    .ant-input-number-input-wrap{
+        width: 200px;
+        input{
+            width: 100%;
+        }
+    }
 }

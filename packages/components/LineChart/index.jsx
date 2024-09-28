@@ -19,10 +19,10 @@ export default function LineChart({ startTime, endTime, visible = true }) {
 
   const config = {
     data,
-    width: 400,
-    height: 200,
     xField: 'year',
     yField: 'value',
+    // autoFit: true,
+    // forceFit: true,
   };
   if (!visible) return;
 

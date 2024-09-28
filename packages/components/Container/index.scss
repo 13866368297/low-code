@@ -1,0 +1,7 @@
+.container{
+  display: flex;
+  min-height: 200px;background: #fff;
+  >div{
+    margin: 4px 8px;
+  }
+}

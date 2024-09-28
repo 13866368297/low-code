@@ -1,27 +1,27 @@
-.layout{
-    .menu{
-        height: 50px;
+.layout {
+  .menu {
+    height: 50px;
+  }
+  .content {
+    display: flex;
+    height: 100vh;
+    .materials {
+      width: 260px;
+      box-shadow: -2px 0 20px 0 rgba(0, 0, 0, 0.1);
+      // border:1px solid orange
     }
-    .content{
-        display: flex;
-        height: 100vh;
-        .materials{
-            width: 260px;
-            box-shadow: -2px 0 20px 0 rgba(0, 0, 0, 0.1);
-            // border:1px solid orange
-        }
-        .canvas{
-            flex:1;
-            // border:1px solid orange
-            position: relative;
-            border: 1px dashed rgb(206, 208, 211);
-    background: rgba(10, 19, 37, 0.05);
-        }
-        .settings{
-            width: 350px;
-            box-shadow: -2px 0 20px 0 rgba(0, 0, 0, 0.1);
-            flex: 0 0 auto;
-            // border:1px solid orange
-        }
+    .canvas {
+      flex: 1;
+      // border:1px solid orange
+      position: relative;
+      border: 1px dashed rgb(206, 208, 211);
+      background: rgba(10, 19, 37, 0.05);
     }
+    .settings {
+      width: 350px;
+      box-shadow: -2px 0 20px 0 rgba(0, 0, 0, 0.1);
+      flex: 0 0 auto;
+      // border:1px solid orange
+    }
+  }
 }

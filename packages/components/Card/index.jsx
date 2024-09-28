@@ -13,12 +13,15 @@ export default function ICard({ layout, visible }) {
     <>
       {!visible && (
         <Card
-          style={{ width: 300 }}
+          style={{ width: 300, height: 311 }}
           cover={
-            <img
-              alt="example"
-              src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
-            />
+            <div style={{ height: 165, width: '100%' }}>
+              <img
+                alt="example"
+                width={'100%'}
+                src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
+              />
+            </div>
           }
           actions={[
             <SettingOutlined key="setting" />,

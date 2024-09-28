@@ -1,77 +1,67 @@
 import { useSchemaStore } from '../store/schema';
 import { materials } from '../state';
 import Interaction from './Interaction';
-import { RunComponentStore } from '@lowcode/components';
-import Sort from './Sort';
+import { RunComponentStore, Position } from '@lowcode/components';
+import Container from './Container';
+import { getName } from './common';
 const ComponentStore = RunComponentStore();
 // import { useComponentStore } from '../store/component';
-const indexMap = {};
 export default function Canvas() {
-  const { addComponent, schema, updateSchema, updatePropsByName } =
+  const { addComponent, schema, patchSchema, updatePropsByName } =
     useSchemaStore();
 
-  console.log('schema', schema);
-  // const { componentStore, updateComponentStore } = useComponentStore();
-  function onDragOver(ev) {
-    ev.preventDefault();
-    ev.dataTransfer.dropEffect = 'move';
-  }
-  function onDrop(ev) {
-    ev.preventDefault();
-
-    const layout = {
-      left: ev.clientX - 200,
-      top: ev.clientY,
-    };
-    let data = ev.dataTransfer.getData('text/plain');
-    if (data) {
-      data = JSON.parse(data);
-    }
-    if (data) {
-      const { type, name } = data;
-      const newName = `${name}(${(indexMap[type] = indexMap[type]
-        ? indexMap[type] + 1
-        : 1)})`;
-
-      addComponent({
-        type,
-        name: newName,
-        props: {
-          // layout,
-        },
-      });
-    }
-  }
-
-  return (
-    <div className="canvas" onDrop={onDrop} onDragOver={onDragOver}>
-      <Sort schema={schema} updateSchema={updateSchema}>
+  const renderContainer = ({ components, styles, horizontal }) => {
+    return (
+      <Container
+        components={components}
+        patchSchema={patchSchema}
+        styles={styles}
+        horizontal={horizontal}
+      >
         {(component) => {
           const Component = materials[component.type]?.component;
+          const isContainer = component.type === 'MContainer';
           return (
-            <ComponentStore>
+            <ComponentStore key={component.name}>
               {(componentStore, updateComponentStore) => {
                 const store = componentStore[component.name] || {};
                 const { layout, ...restProps } = component.props;
                 return (
-                  // <Position layout={layout}>
-                  // <Interaction
-                  //   component={component}
-                  //   // updatePropsByName={updatePropsByName}
-                  // >
-                  <Component
-                    {...restProps}
-                    {...store}
-                    updateComponentStore={updateComponentStore}
-                  />
-                  // </Interaction>
-                  // </Position>
+                  <>
+                    {!isContainer ? (
+                      <Component
+                        {...restProps}
+                        {...store}
+                        updateComponentStore={updateComponentStore}
+                      ></Component>
+                    ) : (
+                      renderContainer({
+                        components: component.children,
+                        styles: {
+                          display: 'flex',
+                          minHeight: 200,
+                          background: '#fff',
+                          flexGrow: 0,
+                        },
+                        horizontal: true,
+                      })
+                    )}
+                  </>
                 );
               }}
             </ComponentStore>
           );
         }}
-      </Sort>
+      </Container>
+    );
+  };
+
+  return (
+    <div className="canvas">
+      {renderContainer({
+        components: schema?.components,
+        styles: { height: '100%' },
+      })}
     </div>
   );
 }

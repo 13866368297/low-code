@@ -72,8 +72,6 @@ export default function Interaction({
         component === selectedComponent ? 'active' : ''
       }`}
       ref={domRef}
-      draggable
-      data-sort={component.sort}
     >
       {children}
     </div>

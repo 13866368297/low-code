@@ -11,10 +11,16 @@ const getSchema = () => {
 };
 
 function useSchema() {
-  const queue = useRef([]);
+  const localScheme = getSchema();
+  const queue = useRef([localScheme]);
   const queueIndex = useRef(0);
   const [schema, setSchema] = useState(getSchema());
-  console.log('schema', schema);
+  console.log(queueIndex.current, queue.current);
+
+  const patchSchema = (partial) => {
+    const newSchema = { ...schema, ...partial };
+    updateSchema(newSchema);
+  };
 
   const updateSchema = (schema, cache = true) => {
     const newSchema = cloneDeep(schema);
@@ -26,17 +32,76 @@ function useSchema() {
     setSchema(newSchema);
   };
 
-  const addComponent = (component) => {
-    // const newSchema = cloneDeep(schema);
-    schema.components.push(component);
+  const addComponent = (component, components) => {
+    components.push(component);
+    updateSchema(schema);
+  };
+
+  const removeComponent = (component, parents = schema.components) => {
+    const index = parents.indexOf(component);
+    if (index > -1) {
+      parents.splice(index, 1);
+    } else {
+      parents.forEach((child) => {
+        if (child.children) {
+          removeComponent(component, child.children);
+        }
+      });
+    }
+  };
+
+  const insertComponentFunc = (
+    component,
+    { referComponent, front, parents = schema.components }
+  ) => {
+    let index = parents.indexOf(referComponent);
+    if (index > -1) {
+      if (front) index -= 1;
+      parents.splice(index + 1, 0, component);
+    } else {
+      parents.forEach((child) => {
+        if (child.children) {
+          insertComponentFunc(component, {
+            referComponent,
+            front,
+            parents: child.children,
+          });
+        }
+      });
+    }
+  };
+
+  const insertComponent = (...args) => {
+    insertComponentFunc(...args);
+    updateSchema(schema);
+  };
+
+  const moveComponent = (component, { referComponent, front = false }) => {
+    removeComponent(component);
+    insertComponentFunc(component, { referComponent, front });
+    updateSchema(schema);
+  };
+
+  const intoComponent = (component, parentComponent) => {
+    removeComponent(component);
+    parentComponent.children.push(component);
     updateSchema(schema);
   };
 
   const updatePropsByName = (name, props, cache) => {
-    // const newSchema = cloneDeep(schema);
-    const component = schema.components.find(
+    let component = schema.components.find(
       (component) => component.name === name
     );
+    if (!component) {
+      schema.components.forEach((item) => {
+        const findComponent = item.children?.find(
+          (child) => (child.name = name)
+        );
+        if (findComponent) {
+          component = findComponent;
+        }
+      });
+    }
     Object.assign(component.props, props);
     updateSchema(schema, cache);
   };
@@ -60,9 +125,13 @@ function useSchema() {
     schema,
     addComponent,
     updateSchema,
+    patchSchema,
     updatePropsByName,
     goFoward,
     goBack,
+    moveComponent,
+    intoComponent,
+    insertComponent,
   };
 }
 

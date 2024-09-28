@@ -6,8 +6,6 @@ import createRender from '@lowcode/render';
 import { Prvoider } from 'react-global-hook-store';
 import './index.scss';
 
-console.log('materials', materials);
-
 const Builder = createBuilder(materials);
 const Render = createRender(materials);
 
